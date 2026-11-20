@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TurfBook &bull; Next-Gen Sports Turf Booking Experience</title>
+  <meta name="description" content="Cinematic visual sequence and motion experience for TurfBook — the premier turf booking management system." />
+
+  <!-- Google Fonts: Outfit (Display) & Inter (Body) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+  <!-- Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              pitch: '#006b2c',
+              emerald: '#00873a',
+              bright: '#22c55e',
+              glow: '#62df7d',
+              dark: '#08120b',
+              accent: '#10b981',
+            },
+            surface: {
+              base: '#090e17',
+              card: '#0f172a',
+              cardHover: '#16223b',
+              border: 'rgba(255, 255, 255, 0.08)',
+              glass: 'rgba(15, 23, 42, 0.75)',
+            }
+          },
+          fontFamily: {
+            display: ['Outfit', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- GSAP & ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Lenis for smooth momentum scrolling -->
+  <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+
+  <style>
+    /* Custom CSS Motion Language & Styling Tokens */
+    :root {
+      --pitch-green: #00873a;
+      --neon-turf: #4edea3;
+      --glow-turf: rgba(78, 222, 163, 0.25);
+      --bg-dark: #070c14;
+    }
+
+    * {
+      box-sizing: border-box;
+      user-select: none;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: #f1f5f9;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090e17;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #00873a;
+      border-radius: 3px;
+    }
+
+    /* Typography Reveal Mask Containers */
+    .line-mask {
+      overflow: hidden;
+      display: block;
+      padding-bottom: 0.1em;
+    }
+
+    .reveal-item {
+      display: inline-block;
+      transform: translateY(120%);
+      will-change: transform, opacity;
+    }
+
+    /* Gradient Text */
+    .text-turf-gradient {
+      background: linear-gradient(135deg, #4edea3 0%, #22c55e 50%, #00873a 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-glow-gradient {
+      background: linear-gradient(180deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glassmorphism Classes */
+    .glass-nav {
+      background: rgba(9, 14, 23, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(78, 222, 163, 0.35);
+      box-shadow: 0 12px 30px -10px rgba(0, 135, 58, 0.3);
+    }
+
+    /* Glows & Atmosphere */
+    .turf-glow-radial {
+      background: radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.18) 0%, rgba(9, 14, 23, 0) 70%);
+    }
+
+    /* Floating Animation */
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .animate-float {
+      animation: floatGentle 5s ease-in-out infinite;
+    }
+
+    /* Radar Ping Animation */
+    @keyframes radarPulse {
+      0% { transform: scale(0.8); opacity: 0.9; }
+      100% { transform: scale(2.6); opacity: 0; }
+    }
+    .radar-pulse-ring {
+      animation: radarPulse 2.8s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+    }
+
+    /* Horizontal Showcase Cards */
+    .horizontal-scroll-container {
+      display: flex;
+      flex-wrap: nowrap;
+      will-change: transform;
+    }
+
+    /* Kinetic Typography Stroke */
+    .stroke-text {
+      -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.2);
+      color: transparent;
+      transition: all 0.4s ease;
+    }
+    .stroke-text:hover {
+      -webkit-text-stroke: 1.5px #4edea3;
+      color: rgba(78, 222, 163, 0.1);
+    }
+
+    /* Smooth Button Glare */
+    .btn-glare {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-glare::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -60%;
+      width: 40%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: rotate(25deg);
+      transition: all 0.75s ease;
+    }
+    .btn-glare:hover::after {
+      left: 120%;
+    }
+
+    /* Slot Picker Selected State */
+    .slot-btn.active-slot {
+      background: linear-gradient(135deg, #00873a, #22c55e);
+      color: #ffffff;
+      border-color: #4edea3;
+      box-shadow: 0 0 15px rgba(78, 222, 163, 0.4);
+    }
+
+    /* ============================================================
+       SCROLL-REVEAL SLIDE ANIMATIONS (Left / Right / Up)
+       ============================================================ */
+    .scroll-slide-left {
+      opacity: 0;
+      transform: translateX(-80px) scale(0.96);
+      filter: blur(4px);
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity, filter;
+    }
+    .scroll-slide-right {
+      opacity: 0;
+      transform: translateX(80px) scale(0.96);
+      filter: blur(4px);
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity, filter;
+    }
+    .scroll-slide-up {
+      opacity: 0;
+      transform: translateY(60px) scale(0.96);
+      filter: blur(4px);
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity, filter;
+    }
+    .scroll-slide-left.is-visible,
+    .scroll-slide-right.is-visible,
+    .scroll-slide-up.is-visible {
+      opacity: 1 !important;
+      transform: translate(0, 0) scale(1) !important;
+      filter: blur(0px) !important;
+    }
+    [data-delay="100"] { transition-delay: 100ms !important; }
+    [data-delay="150"] { transition-delay: 150ms !important; }
+    [data-delay="200"] { transition-delay: 200ms !important; }
+    [data-delay="250"] { transition-delay: 250ms !important; }
+    [data-delay="300"] { transition-delay: 300ms !important; }
+    [data-delay="350"] { transition-delay: 350ms !important; }
+    [data-delay="400"] { transition-delay: 400ms !important; }
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-slide-left, .scroll-slide-right, .scroll-slide-up { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body class="bg-[#070c14] text-slate-100 antialiased selection:bg-brand-emerald selection:text-white">
+
+  <!-- ============================================================== -->
+  <!-- 1. WEBSITE OPENING CURTAIN & CINEMATIC LOGO INTRO              -->
+  <!-- ============================================================== -->
+  <div id="intro-curtain" class="fixed inset-0 z-[100] bg-[#070c14] flex items-center justify-center pointer-events-auto">
+    <!-- Ambient Radial Field -->
+    <div class="absolute w-[600px] h-[600px] rounded-full turf-glow-radial pointer-events-none blur-3xl opacity-60"></div>
+    
+    <div id="intro-center-logo" class="relative z-10 flex flex-col items-center justify-center">
+      <!-- Minimal Animated Pitch Icon -->
+      <div id="intro-icon" class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-pitch to-brand-bright flex items-center justify-center shadow-[0_0_40px_rgba(34,197,94,0.4)] mb-4">
+        <span class="material-symbols-outlined text-white text-3xl">sports_soccer</span>
+      </div>
+      
+      <!-- Text: TURFBOOK with Line Reveal Mask -->
+      <div class="line-mask overflow-hidden">
+        <h1 id="intro-title" class="font-display text-4xl sm:text-6xl font-black tracking-widest text-white uppercase text-center">
+          TURF<span class="text-brand-glow">BOOK</span>
+        </h1>
+      </div>
+      
+      <p id="intro-subtitle" class="font-body text-xs sm:text-sm text-slate-400 uppercase tracking-[0.4em] mt-3 font-semibold opacity-0">
+        Book Your Game &bull; Own The Turf
+      </p>
+
+      <!-- Minimal Progress Line -->
+      <div class="w-48 h-[2px] bg-slate-800 rounded-full mt-6 overflow-hidden">
+        <div id="intro-bar" class="w-0 h-full bg-gradient-to-r from-brand-emerald to-brand-glow"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- 2. TRANSFORMATION NAVIGATION BAR                              -->
+  <!-- ============================================================== -->
+  <header id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 py-6 px-4 sm:px-8">
+    <div class="max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 rounded-2xl px-5 py-3" id="nav-inner">
+      
+      <!-- Logo Anchor (Destination of opening animation) -->
+      <a href="#hero-section" id="nav-logo" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-pitch to-brand-bright flex items-center justify-center text-white shadow-[0_0_15px_rgba(34,197,94,0.3)] group-hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-2xl">sports_soccer</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="font-display font-black text-xl tracking-tight text-white">Turf<span class="text-brand-glow">Book</span></span>
+          <span class="text-[9px] font-mono tracking-widest uppercase text-emerald-400 -mt-1 hidden sm:block">Arena OS</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Items -->
+      <nav class="hidden lg:flex items-center gap-1 bg-surface-card/60 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10 shadow-inner">
+        <a href="#hero-section" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Home</a>
+        <a href="#sports-section" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Sports</a>
+        <a href="#featured-turfs-section" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Venues</a>
+        <a href="#how-it-works-section" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Workflow</a>
+        <a href="#booking-ui-section" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Book Demo</a>
+        <a href="#location-section" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Radar Map</a>
+        <a href="#dashboard-transitions" class="nav-link px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-white hover:bg-white/5 rounded-full transition-all">Dashboards</a>
+      </nav>
+
+      <!-- Right Action CTAs -->
+      <div class="flex items-center gap-3">
+        <!-- Live System Indicator -->
+        <div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>MongoDB v7 Connected</span>
+        </div>
+
+        <!-- Quick Switch to App / Admin Button -->
+        <a href="#booking-ui-section" class="btn-glare px-4 sm:px-5 py-2 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white text-xs sm:text-sm font-bold uppercase tracking-wider shadow-[0_4px_20px_rgba(0,135,58,0.4)] hover:brightness-110 active:scale-95 transition-all flex items-center gap-2">
+          <span>Book Slot</span>
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+
+  <!-- ============================================================== -->
+  <!-- 3. HERO SECTION (100vh CINEMATIC SPORTS TURF)                  -->
+  <!-- ============================================================== -->
+  <section id="hero-section" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-20">
+    
+    <!-- Background Video Canvas / Video Layer -->
+    <div id="hero-media-wrapper" class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+      <video id="hero-video" class="w-full h-full object-cover scale-110 will-change-transform" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=1920&q=80">
+        <source src="turf.mp4" type="video/mp4" />
+        <source src="frontend/assets/turf.mp4" type="video/mp4" />
+      </video>
+
+      <!-- Cinematic Gradients & Masking (Layered Depth) -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[#070c14]/75 via-[#070c14]/50 to-[#070c14]"></div>
+      <div class="absolute inset-0 bg-radial at-center from-transparent via-[#070c14]/30 to-[#070c14]/90"></div>
+      
+      <!-- Subtle Floodlight Flare -->
+      <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-emerald-500/15 blur-[120px] rounded-full"></div>
+    </div>
+
+    <!-- Hero Content Container -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 py-20 flex flex-col items-center text-center">
+      
+      <!-- Premium Tag Badge -->
+      <div id="hero-badge" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-card/80 border border-white/10 backdrop-blur-md shadow-lg mb-8 opacity-0">
+        <span class="w-2 h-2 rounded-full bg-brand-glow animate-ping"></span>
+        <span class="text-xs uppercase font-mono tracking-widest text-emerald-300 font-semibold">Turf Booking Management System</span>
+      </div>
+
+      <!-- Progressive Masked Typography Reveal -->
+      <div class="space-y-1 sm:space-y-2 mb-6">
+        <div class="line-mask">
+          <h1 class="hero-line font-display text-4xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white leading-none">
+            FIND YOUR
+          </h1>
+        </div>
+        <div class="line-mask">
+          <h1 class="hero-line font-display text-5xl sm:text-8xl lg:text-9xl font-black uppercase tracking-tight text-turf-gradient leading-none">
+            TURF.
+          </h1>
+        </div>
+        <div class="line-mask">
+          <h1 class="hero-line font-display text-4xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tight text-white leading-none">
+            BOOK YOUR
+          </h1>
+        </div>
+        <div class="line-mask">
+          <h1 class="hero-line font-display text-5xl sm:text-8xl lg:text-9xl font-black uppercase tracking-tight text-turf-gradient leading-none">
+            GAME.
+          </h1>
+        </div>
+      </div>
+
+      <!-- Description Paragraph -->
+      <div class="line-mask max-w-2xl mx-auto mb-10">
+        <p id="hero-desc" class="font-body text-base sm:text-lg text-slate-300 font-normal leading-relaxed opacity-0">
+          The next-generation stadium OS. Discover verified artificial turf arenas in your city, check real-time floodlit slots, and lock in your match in under 60 seconds with instant digital passes.
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div id="hero-actions" class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto opacity-0">
+        <a href="#featured-turfs-section" class="btn-glare w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white font-display font-bold text-sm uppercase tracking-wider shadow-[0_10px_35px_rgba(0,135,58,0.5)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3">
+          <span class="material-symbols-outlined text-xl">explore</span>
+          <span>Explore Turfs</span>
+        </a>
+        <a href="#booking-ui-section" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-surface-card/80 border border-white/15 backdrop-blur-md text-white font-display font-bold text-sm uppercase tracking-wider hover:bg-white/10 hover:border-emerald-400/40 transition-all flex items-center justify-center gap-3">
+          <span class="material-symbols-outlined text-xl text-brand-glow">calendar_month</span>
+          <span>Book Now</span>
+        </a>
+      </div>
+
+      <!-- Floating Mini Turf Specs Pills -->
+      <div id="hero-stats" class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-16 max-w-3xl w-full opacity-0">
+        <div class="p-3 rounded-xl glass-card text-center">
+          <span class="font-display font-black text-2xl sm:text-3xl text-white">450+</span>
+          <span class="block text-[11px] font-mono uppercase tracking-wider text-slate-400 mt-0.5">Verified Arenas</span>
+        </div>
+        <div class="p-3 rounded-xl glass-card text-center">
+          <span class="font-display font-black text-2xl sm:text-3xl text-brand-glow">99.4%</span>
+          <span class="block text-[11px] font-mono uppercase tracking-wider text-slate-400 mt-0.5">Slot Reliability</span>
+        </div>
+        <div class="p-3 rounded-xl glass-card text-center">
+          <span class="font-display font-black text-2xl sm:text-3xl text-white">Instant</span>
+          <span class="block text-[11px] font-mono uppercase tracking-wider text-slate-400 mt-0.5">QR Entry Pass</span>
+        </div>
+        <div class="p-3 rounded-xl glass-card text-center">
+          <span class="font-display font-black text-2xl sm:text-3xl text-emerald-400">4.9 ★</span>
+          <span class="block text-[11px] font-mono uppercase tracking-wider text-slate-400 mt-0.5">Player Rating</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll To Explore Indicator -->
+    <a href="#sports-section" id="scroll-indicator" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-white transition-colors cursor-pointer z-20">
+      <span class="text-[10px] font-mono uppercase tracking-[0.3em] font-semibold text-emerald-400">Scroll To Explore</span>
+      <div class="w-5 h-9 rounded-full border-2 border-emerald-500/40 flex justify-center p-1">
+        <div class="w-1.5 h-2 rounded-full bg-emerald-400 animate-bounce"></div>
+      </div>
+    </a>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 4. SPORTS SECTION: CINEMATIC CHAPTER PANELS                    -->
+  <!-- ============================================================== -->
+  <section id="sports-section" class="relative py-28 px-4 sm:px-8 max-w-7xl mx-auto overflow-hidden">
+    
+    <div class="mb-16 text-center sm:text-left flex flex-col sm:flex-row sm:items-end justify-between gap-6 scroll-slide-left">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-3">
+          <span class="material-symbols-outlined text-sm">category</span>
+          <span>SELECT YOUR DISCIPLINE</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-6xl font-black uppercase text-white tracking-tight">
+          CINEMATIC <span class="text-turf-gradient">SPORTS</span>
+        </h2>
+      </div>
+      <p class="text-slate-400 text-sm max-w-md font-body">
+        Each sport is engineered with specialized artificial turf shock pads, floodlight ratings, and precise dimensional boundaries.
+      </p>
+    </div>
+
+    <!-- 4 Sports Chapter Accordion / Panels with Parallax & Mask Reveal -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6" id="sports-panels-grid">
+      
+      <!-- Sport 01: FOOTBALL -->
+      <div class="sport-panel scroll-slide-left group relative h-[520px] rounded-3xl overflow-hidden glass-card cursor-pointer transition-all duration-700 hover:lg:col-span-2">
+        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=1200&q=80" alt="Football Turf" class="sport-bg absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-115 transition-transform duration-1000 will-change-transform" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070c14] via-[#070c14]/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-emerald-950/20 mix-blend-overlay group-hover:bg-transparent transition-all"></div>
+
+        <!-- Sport Info Overlay -->
+        <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold px-3 py-1 rounded-full bg-black/60 border border-white/10 text-emerald-400 backdrop-blur-md">01 / CHAPTER</span>
+            <div class="w-10 h-10 rounded-full bg-brand-emerald/90 flex items-center justify-center text-white shadow-lg">
+              <span class="material-symbols-outlined text-xl">sports_soccer</span>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-emerald-400 font-mono text-xs tracking-widest uppercase block mb-1">5v5 &bull; 7v7 &bull; 11v11</span>
+            <h3 class="font-display text-3xl sm:text-4xl font-black uppercase text-white mb-2 group-hover:text-brand-glow transition-colors">
+              FOOTBALL
+            </h3>
+            <p class="text-slate-300 text-xs sm:text-sm line-clamp-2 mb-4 font-normal">
+              FIFA-grade monofilament artificial turf with infill rubber granules for authentic ball roll, natural sprint traction, and knee protection.
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-white/15">
+              <span class="text-xs font-mono text-slate-300">From <strong class="text-white font-bold">&#8377;1,200</strong>/hr</span>
+              <a href="#featured-turfs-section" class="ml-auto inline-flex items-center gap-1 text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                <span>View Pitches</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sport 02: CRICKET -->
+      <div class="sport-panel scroll-slide-right group relative h-[520px] rounded-3xl overflow-hidden glass-card cursor-pointer transition-all duration-700 hover:lg:col-span-2" data-delay="100">
+        <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=1200&q=80" alt="Box Cricket Turf" class="sport-bg absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-115 transition-transform duration-1000 will-change-transform" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070c14] via-[#070c14]/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-emerald-950/20 mix-blend-overlay group-hover:bg-transparent transition-all"></div>
+
+        <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold px-3 py-1 rounded-full bg-black/60 border border-white/10 text-emerald-400 backdrop-blur-md">02 / CHAPTER</span>
+            <div class="w-10 h-10 rounded-full bg-brand-emerald/90 flex items-center justify-center text-white shadow-lg">
+              <span class="material-symbols-outlined text-xl">sports_cricket</span>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-emerald-400 font-mono text-xs tracking-widest uppercase block mb-1">Box Cricket &bull; Net Practice</span>
+            <h3 class="font-display text-3xl sm:text-4xl font-black uppercase text-white mb-2 group-hover:text-brand-glow transition-colors">
+              CRICKET
+            </h3>
+            <p class="text-slate-300 text-xs sm:text-sm line-clamp-2 mb-4 font-normal">
+              High-density curl turf pitches with high-rebound bounce response, surround net enclosures, and glare-free 360-degree LED floodlighting.
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-white/15">
+              <span class="text-xs font-mono text-slate-300">From <strong class="text-white font-bold">&#8377;900</strong>/hr</span>
+              <a href="#featured-turfs-section" class="ml-auto inline-flex items-center gap-1 text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                <span>View Pitches</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sport 03: BADMINTON -->
+      <div class="sport-panel scroll-slide-left group relative h-[520px] rounded-3xl overflow-hidden glass-card cursor-pointer transition-all duration-700 hover:lg:col-span-2" data-delay="150">
+        <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=1200&q=80" alt="Badminton Court" class="sport-bg absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-115 transition-transform duration-1000 will-change-transform" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070c14] via-[#070c14]/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-emerald-950/20 mix-blend-overlay group-hover:bg-transparent transition-all"></div>
+
+        <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold px-3 py-1 rounded-full bg-black/60 border border-white/10 text-emerald-400 backdrop-blur-md">03 / CHAPTER</span>
+            <div class="w-10 h-10 rounded-full bg-brand-emerald/90 flex items-center justify-center text-white shadow-lg">
+              <span class="material-symbols-outlined text-xl">sports_tennis</span>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-emerald-400 font-mono text-xs tracking-widest uppercase block mb-1">Indoor BWF-Grade Synthetic</span>
+            <h3 class="font-display text-3xl sm:text-4xl font-black uppercase text-white mb-2 group-hover:text-brand-glow transition-colors">
+              BADMINTON
+            </h3>
+            <p class="text-slate-300 text-xs sm:text-sm line-clamp-2 mb-4 font-normal">
+              BWF-certified multi-layer PVC synthetic courts with anti-slip embossed texture and shock absorption for rapid lateral court movements.
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-white/15">
+              <span class="text-xs font-mono text-slate-300">From <strong class="text-white font-bold">&#8377;450</strong>/hr</span>
+              <a href="#featured-turfs-section" class="ml-auto inline-flex items-center gap-1 text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                <span>View Pitches</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sport 04: MULTI-SPORT -->
+      <div class="sport-panel scroll-slide-right group relative h-[520px] rounded-3xl overflow-hidden glass-card cursor-pointer transition-all duration-700 hover:lg:col-span-2" data-delay="200">
+        <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=1200&q=80" alt="Multi Sport Arena" class="sport-bg absolute inset-0 w-full h-full object-cover scale-105 group-hover:scale-115 transition-transform duration-1000 will-change-transform" />
+        <div class="absolute inset-0 bg-gradient-to-t from-[#070c14] via-[#070c14]/40 to-transparent"></div>
+        <div class="absolute inset-0 bg-emerald-950/20 mix-blend-overlay group-hover:bg-transparent transition-all"></div>
+
+        <div class="absolute inset-0 p-8 flex flex-col justify-between z-10">
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-xs font-bold px-3 py-1 rounded-full bg-black/60 border border-white/10 text-emerald-400 backdrop-blur-md">04 / CHAPTER</span>
+            <div class="w-10 h-10 rounded-full bg-brand-emerald/90 flex items-center justify-center text-white shadow-lg">
+              <span class="material-symbols-outlined text-xl">sports_volleyball</span>
+            </div>
+          </div>
+
+          <div>
+            <span class="text-emerald-400 font-mono text-xs tracking-widest uppercase block mb-1">Pickleball &bull; Futsal &bull; Volleyball</span>
+            <h3 class="font-display text-3xl sm:text-4xl font-black uppercase text-white mb-2 group-hover:text-brand-glow transition-colors">
+              MULTI-SPORT
+            </h3>
+            <p class="text-slate-300 text-xs sm:text-sm line-clamp-2 mb-4 font-normal">
+              Modular polymer all-weather arenas reconfigurable for tournament leagues, community matches, and multi-game training sessions.
+            </p>
+            <div class="flex items-center gap-3 pt-3 border-t border-white/15">
+              <span class="text-xs font-mono text-slate-300">From <strong class="text-white font-bold">&#8377;1,400</strong>/hr</span>
+              <a href="#featured-turfs-section" class="ml-auto inline-flex items-center gap-1 text-xs font-bold text-emerald-400 group-hover:translate-x-1 transition-transform">
+                <span>View Pitches</span>
+                <span class="material-symbols-outlined text-sm">arrow_forward</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 5. FEATURED TURFS: HORIZONTAL SCROLL SHOWCASE                  -->
+  <!-- ============================================================== -->
+  <section id="featured-turfs-section" class="relative py-28 overflow-hidden bg-gradient-to-b from-[#070c14] via-[#09111c] to-[#070c14]">
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-3">
+          <span class="material-symbols-outlined text-sm">stars</span>
+          <span>CURATED PREMIUM ARENAS</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-6xl font-black uppercase text-white tracking-tight">
+          FEATURED <span class="text-turf-gradient">TURFS</span>
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-3 text-slate-400 font-mono text-xs scroll-slide-right">
+        <span class="w-8 h-[1px] bg-slate-700"></span>
+        <span>SCROLL DOWN TO TRAVEL HORIZONTALLY</span>
+        <span class="material-symbols-outlined text-emerald-400 animate-pulse text-base">arrow_forward</span>
+      </div>
+    </div>
+
+    <!-- Pinned Horizontal Scroll Wrapper -->
+    <div id="horizontal-track" class="horizontal-scroll-container px-4 sm:px-12 gap-8 py-6">
+      
+      <!-- Turf Card 01 -->
+      <div class="turf-card scroll-slide-left flex-none w-[340px] sm:w-[420px] rounded-3xl glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-2xl">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=800&q=80" alt="Green Arena Sports Hub" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent"></div>
+          
+          <div class="absolute top-4 left-4 flex gap-2">
+            <span class="px-3 py-1 rounded-full bg-emerald-600/90 text-white font-mono text-xs font-bold backdrop-blur-md">Turf 01</span>
+            <span class="px-3 py-1 rounded-full bg-black/60 border border-white/20 text-white font-mono text-xs font-semibold backdrop-blur-md">Football 7v7</span>
+          </div>
+
+          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 border border-emerald-400/40 text-emerald-400 font-mono text-xs font-bold backdrop-blur-md flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">star</span>
+            <span>4.9</span>
+          </div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm text-emerald-400">location_on</span>
+              <span>Koramangala, Bengaluru</span>
+            </span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold">1.2 km</span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <h3 class="font-display text-xl font-black text-white group-hover:text-brand-glow transition-colors">Green Arena Sports Hub</h3>
+              <p class="text-xs text-slate-400 mt-1">FIFA 2-Star AstroTurf with Philips LED Floodlights & Changing Pods</p>
+            </div>
+            <div class="text-right">
+              <span class="font-display font-black text-xl text-white">&#8377;1,200</span>
+              <span class="block text-[10px] font-mono text-slate-400">per hour</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-4 border-t border-white/10">
+            <button onclick="selectTurfForBooking('Green Arena Sports Hub', 1200)" class="btn-glare flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white text-xs font-bold uppercase tracking-wider shadow-md hover:brightness-110 active:scale-95 transition-all text-center">
+              Quick Book
+            </button>
+            <a href="https://maps.google.com/?q=Koramangala+Bengaluru" target="_blank" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 transition-colors" title="Google Maps Directions">
+              <span class="material-symbols-outlined text-base">near_me</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turf Card 02 -->
+      <div class="turf-card scroll-slide-right flex-none w-[340px] sm:w-[420px] rounded-3xl glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-2xl" data-delay="100">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&w=800&q=80" alt="Kickoff Arena Floodlit" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent"></div>
+          
+          <div class="absolute top-4 left-4 flex gap-2">
+            <span class="px-3 py-1 rounded-full bg-emerald-600/90 text-white font-mono text-xs font-bold backdrop-blur-md">Turf 02</span>
+            <span class="px-3 py-1 rounded-full bg-black/60 border border-white/20 text-white font-mono text-xs font-semibold backdrop-blur-md">Football &bull; Cricket</span>
+          </div>
+
+          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 border border-emerald-400/40 text-emerald-400 font-mono text-xs font-bold backdrop-blur-md flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">star</span>
+            <span>4.8</span>
+          </div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm text-emerald-400">location_on</span>
+              <span>Indiranagar, Bengaluru</span>
+            </span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold">2.8 km</span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <h3 class="font-display text-xl font-black text-white group-hover:text-brand-glow transition-colors">Kickoff Arena Floodlit</h3>
+              <p class="text-xs text-slate-400 mt-1">50mm Shock-pad turf, electronic scoreboard, spectator lounge & cafeteria</p>
+            </div>
+            <div class="text-right">
+              <span class="font-display font-black text-xl text-white">&#8377;1,500</span>
+              <span class="block text-[10px] font-mono text-slate-400">per hour</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-4 border-t border-white/10">
+            <button onclick="selectTurfForBooking('Kickoff Arena Floodlit', 1500)" class="btn-glare flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white text-xs font-bold uppercase tracking-wider shadow-md hover:brightness-110 active:scale-95 transition-all text-center">
+              Quick Book
+            </button>
+            <a href="https://maps.google.com/?q=Indiranagar+Bengaluru" target="_blank" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 transition-colors" title="Google Maps Directions">
+              <span class="material-symbols-outlined text-base">near_me</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turf Card 03 -->
+      <div class="turf-card scroll-slide-left flex-none w-[340px] sm:w-[420px] rounded-3xl glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-2xl" data-delay="200">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?auto=format&fit=crop&w=800&q=80" alt="Thunder Box Cricket Arena" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent"></div>
+          
+          <div class="absolute top-4 left-4 flex gap-2">
+            <span class="px-3 py-1 rounded-full bg-emerald-600/90 text-white font-mono text-xs font-bold backdrop-blur-md">Turf 03</span>
+            <span class="px-3 py-1 rounded-full bg-black/60 border border-white/20 text-white font-mono text-xs font-semibold backdrop-blur-md">Box Cricket</span>
+          </div>
+
+          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 border border-emerald-400/40 text-emerald-400 font-mono text-xs font-bold backdrop-blur-md flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">star</span>
+            <span>4.9</span>
+          </div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm text-emerald-400">location_on</span>
+              <span>HSR Layout, Bengaluru</span>
+            </span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold">3.4 km</span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <h3 class="font-display text-xl font-black text-white group-hover:text-brand-glow transition-colors">Thunder Box Cricket Arena</h3>
+              <p class="text-xs text-slate-400 mt-1">High-tension caged nets with machine bowling lanes & tournament umpires</p>
+            </div>
+            <div class="text-right">
+              <span class="font-display font-black text-xl text-white">&#8377;900</span>
+              <span class="block text-[10px] font-mono text-slate-400">per hour</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-4 border-t border-white/10">
+            <button onclick="selectTurfForBooking('Thunder Box Cricket Arena', 900)" class="btn-glare flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white text-xs font-bold uppercase tracking-wider shadow-md hover:brightness-110 active:scale-95 transition-all text-center">
+              Quick Book
+            </button>
+            <a href="https://maps.google.com/?q=HSR+Layout+Bengaluru" target="_blank" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 transition-colors" title="Google Maps Directions">
+              <span class="material-symbols-outlined text-base">near_me</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turf Card 04 -->
+      <div class="turf-card scroll-slide-right flex-none w-[340px] sm:w-[420px] rounded-3xl glass-card overflow-hidden group hover:scale-[1.02] transition-all duration-500 shadow-2xl" data-delay="300">
+        <div class="relative h-64 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&w=800&q=80" alt="Champions Multi-Sport Complex" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+          <div class="absolute inset-0 bg-gradient-to-t from-surface-card via-transparent to-transparent"></div>
+          
+          <div class="absolute top-4 left-4 flex gap-2">
+            <span class="px-3 py-1 rounded-full bg-emerald-600/90 text-white font-mono text-xs font-bold backdrop-blur-md">Turf 04</span>
+            <span class="px-3 py-1 rounded-full bg-black/60 border border-white/20 text-white font-mono text-xs font-semibold backdrop-blur-md">Multi-Sport</span>
+          </div>
+
+          <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-black/70 border border-emerald-400/40 text-emerald-400 font-mono text-xs font-bold backdrop-blur-md flex items-center gap-1">
+            <span class="material-symbols-outlined text-sm">star</span>
+            <span>4.9</span>
+          </div>
+
+          <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+            <span class="flex items-center gap-1">
+              <span class="material-symbols-outlined text-sm text-emerald-400">location_on</span>
+              <span>Whitefield, Bengaluru</span>
+            </span>
+            <span class="px-2 py-0.5 rounded bg-emerald-950/80 border border-emerald-500/30 text-emerald-300 text-[10px] font-bold">5.1 km</span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <div class="flex items-start justify-between gap-4 mb-3">
+            <div>
+              <h3 class="font-display text-xl font-black text-white group-hover:text-brand-glow transition-colors">Champions Multi-Sport Park</h3>
+              <p class="text-xs text-slate-400 mt-1">Badminton, Tennis & Football arena with showers, gear rental & coaching</p>
+            </div>
+            <div class="text-right">
+              <span class="font-display font-black text-xl text-white">&#8377;1,400</span>
+              <span class="block text-[10px] font-mono text-slate-400">per hour</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2 pt-4 border-t border-white/10">
+            <button onclick="selectTurfForBooking('Champions Multi-Sport Park', 1400)" class="btn-glare flex-1 py-2.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white text-xs font-bold uppercase tracking-wider shadow-md hover:brightness-110 active:scale-95 transition-all text-center">
+              Quick Book
+            </button>
+            <a href="https://maps.google.com/?q=Whitefield+Bengaluru" target="_blank" class="p-2.5 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-slate-300 transition-colors" title="Google Maps Directions">
+              <span class="material-symbols-outlined text-base">near_me</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 6. KINETIC TYPOGRAPHY SECTION                                  -->
+  <!-- ============================================================== -->
+  <section id="typography-section" class="relative py-36 overflow-hidden bg-[#070c14] border-y border-white/5">
+    <!-- Ambient Radial Flares -->
+    <div class="absolute -left-40 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-emerald/10 blur-[140px] rounded-full pointer-events-none"></div>
+    <div class="absolute -right-40 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-bright/10 blur-[140px] rounded-full pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 flex flex-col items-center justify-center text-center">
+      
+      <!-- Phrase 1: YOUR GAME (Sliding from Left) -->
+      <div class="overflow-hidden w-full py-2">
+        <h2 id="typo-game" class="font-display text-5xl sm:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-white will-change-transform leading-none">
+          YOUR GAME.
+        </h2>
+      </div>
+
+      <!-- Phrase 2: YOUR TIME (Sliding from Right) -->
+      <div class="overflow-hidden w-full py-2 -my-2 sm:-my-4">
+        <h2 id="typo-time" class="font-display text-5xl sm:text-8xl lg:text-9xl font-black uppercase tracking-tighter stroke-text will-change-transform leading-none">
+          YOUR TIME.
+        </h2>
+      </div>
+
+      <!-- Phrase 3: YOUR TURF (Rising Upward) -->
+      <div class="overflow-hidden w-full py-2">
+        <h2 id="typo-turf" class="font-display text-5xl sm:text-8xl lg:text-9xl font-black uppercase tracking-tighter text-turf-gradient will-change-transform leading-none">
+          YOUR TURF.
+        </h2>
+      </div>
+
+      <p class="font-body text-slate-400 text-sm sm:text-base max-w-xl mx-auto mt-8 uppercase tracking-[0.2em] font-semibold">
+        Seamless slot booking &bull; Zero friction &bull; Pure competition
+      </p>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 7. HOW IT WORKS: SCROLL-DRIVEN 4-STEP CINEMATIC FLOW          -->
+  <!-- ============================================================== -->
+  <section id="how-it-works-section" class="relative py-28 px-4 sm:px-8 max-w-7xl mx-auto">
+    
+    <div class="text-center max-w-2xl mx-auto mb-20 scroll-slide-up">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-3">
+        <span class="material-symbols-outlined text-sm">route</span>
+        <span>THE TURFBOOK PROTOCOL</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-6xl font-black uppercase text-white tracking-tight">
+        HOW IT <span class="text-turf-gradient">WORKS</span>
+      </h2>
+      <p class="text-slate-400 text-sm mt-3">From real-time pitch discovery to floodlit kick-off in 4 effortless steps.</p>
+    </div>
+
+    <!-- 4 Interactive Step Progression Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="workflow-cards">
+      
+      <!-- Step 01: FIND -->
+      <div class="workflow-card active scroll-slide-left p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-500 hover:border-emerald-400/50">
+        <div class="w-12 h-12 rounded-2xl bg-brand-pitch/80 text-brand-glow flex items-center justify-center font-display font-black text-xl mb-6 shadow-md border border-brand-glow/30">
+          01
+        </div>
+        <span class="text-emerald-400 font-mono text-xs uppercase tracking-widest block mb-2 font-semibold">Discovery</span>
+        <h3 class="font-display text-2xl font-black uppercase text-white mb-3">FIND</h3>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+          Explore GPS-verified turf arenas nearby. Filter by pitch dimension, sport specification, pricing, and lighting certification.
+        </p>
+        <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span class="material-symbols-outlined text-emerald-400 text-sm">radar</span>
+          <span>450+ Arenas In System</span>
+        </div>
+      </div>
+
+      <!-- Step 02: CHOOSE -->
+      <div class="workflow-card scroll-slide-right p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-500 hover:border-emerald-400/50" data-delay="100">
+        <div class="w-12 h-12 rounded-2xl bg-brand-pitch/80 text-brand-glow flex items-center justify-center font-display font-black text-xl mb-6 shadow-md border border-brand-glow/30">
+          02
+        </div>
+        <span class="text-emerald-400 font-mono text-xs uppercase tracking-widest block mb-2 font-semibold">Selection</span>
+        <h3 class="font-display text-2xl font-black uppercase text-white mb-3">CHOOSE</h3>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+          Inspect turf photography, live reviews from local teams, parking availability, and pick your preferred match date and prime floodlit hour.
+        </p>
+        <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span class="material-symbols-outlined text-emerald-400 text-sm">schedule</span>
+          <span>Live Slot Availability</span>
+        </div>
+      </div>
+
+      <!-- Step 03: BOOK -->
+      <div class="workflow-card scroll-slide-left p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-500 hover:border-emerald-400/50" data-delay="200">
+        <div class="w-12 h-12 rounded-2xl bg-brand-pitch/80 text-brand-glow flex items-center justify-center font-display font-black text-xl mb-6 shadow-md border border-brand-glow/30">
+          03
+        </div>
+        <span class="text-emerald-400 font-mono text-xs uppercase tracking-widest block mb-2 font-semibold">Instant Pass</span>
+        <h3 class="font-display text-2xl font-black uppercase text-white mb-3">BOOK</h3>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+          Instant slot lockdown with zero double-booking conflicts. Pay securely via card, UPI, or turf wallet with automated tax invoice generation.
+        </p>
+        <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span class="material-symbols-outlined text-emerald-400 text-sm">verified_user</span>
+          <span>Zero Double-Booking</span>
+        </div>
+      </div>
+
+      <!-- Step 04: PLAY -->
+      <div class="workflow-card scroll-slide-right p-8 rounded-3xl glass-card relative overflow-hidden transition-all duration-500 hover:border-emerald-400/50" data-delay="300">
+        <div class="w-12 h-12 rounded-2xl bg-brand-pitch/80 text-brand-glow flex items-center justify-center font-display font-black text-xl mb-6 shadow-md border border-brand-glow/30">
+          04
+        </div>
+        <span class="text-emerald-400 font-mono text-xs uppercase tracking-widest block mb-2 font-semibold">Matchday</span>
+        <h3 class="font-display text-2xl font-black uppercase text-white mb-3">PLAY</h3>
+        <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+          Arrive at the arena, flash your automated digital QR pass at the stadium entrance gate, hit the grass under the floodlights, and play your match!
+        </p>
+        <div class="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-2 text-xs font-mono text-slate-300">
+          <span class="material-symbols-outlined text-emerald-400 text-sm">qr_code_scanner</span>
+          <span>Instant Stadium Gate Entry</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 8. REALISTIC BOOKING UI SIMULATION                             -->
+  <!-- ============================================================== -->
+  <section id="booking-ui-section" class="relative py-28 px-4 sm:px-8 max-w-5xl mx-auto">
+    
+    <div class="text-center max-w-2xl mx-auto mb-16 scroll-slide-left">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-3">
+        <span class="material-symbols-outlined text-sm">touch_app</span>
+        <span>INTERACTIVE BOOKING ENGINE</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-6xl font-black uppercase text-white tracking-tight">
+        LIVE BOOKING <span class="text-turf-gradient">INTERFACE</span>
+      </h2>
+      <p class="text-slate-400 text-sm mt-3">Try the real booking workflow right here. Select venue, date, time slot and confirm.</p>
+    </div>
+
+    <!-- Booking Console Glass Container -->
+    <div class="glass-card rounded-3xl p-6 sm:p-10 border border-white/10 shadow-2xl relative overflow-hidden scroll-slide-right">
+      
+      <!-- Console Top Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-8 border-b border-white/10 gap-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-brand-emerald flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-2xl">sports_soccer</span>
+          </div>
+          <div>
+            <h4 id="booking-turf-title" class="font-display font-bold text-lg text-white">Green Arena Sports Hub</h4>
+            <p class="text-xs text-slate-400">Koramangala 4th Block &bull; FIFA 2-Star AstroTurf</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-emerald-300 font-mono text-xs font-semibold">
+            &#8377;<span id="booking-rate-display">1200</span> / hr
+          </span>
+          <span class="px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300 font-mono text-xs font-semibold">
+            Floodlit Slot Active
+          </span>
+        </div>
+      </div>
+
+      <!-- Step 1: Select Date -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px]">1</span>
+            <span>SELECT MATCH DATE</span>
+          </span>
+          <span class="text-xs text-slate-400 font-mono">Today: Sep 26, 2026</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="date-tabs">
+          <button onclick="selectDate(this, 'Today, Sep 26')" class="date-btn active p-3 rounded-xl bg-brand-emerald/90 text-white font-mono text-xs font-bold border border-emerald-400 shadow-md text-center transition-all">
+            <span class="block text-[10px] text-emerald-200">TODAY</span>
+            <span>Sep 26 &bull; Sat</span>
+          </button>
+          <button onclick="selectDate(this, 'Tomorrow, Sep 27')" class="date-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-semibold border border-white/10 text-center transition-all">
+            <span class="block text-[10px] text-slate-400">TOMORROW</span>
+            <span>Sep 27 &bull; Sun</span>
+          </button>
+          <button onclick="selectDate(this, 'Mon, Sep 28')" class="date-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-semibold border border-white/10 text-center transition-all">
+            <span class="block text-[10px] text-slate-400">WEEKDAY</span>
+            <span>Sep 28 &bull; Mon</span>
+          </button>
+          <button onclick="selectDate(this, 'Tue, Sep 29')" class="date-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-semibold border border-white/10 text-center transition-all">
+            <span class="block text-[10px] text-slate-400">WEEKDAY</span>
+            <span>Sep 29 &bull; Tue</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2: Select Time Slot -->
+      <div class="mb-8">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-mono uppercase tracking-widest text-emerald-400 font-semibold flex items-center gap-2">
+            <span class="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-[10px]">2</span>
+            <span>SELECT FLOODLIT TIME SLOT (60 MINS)</span>
+          </span>
+          <span class="text-xs text-slate-400 font-mono">1 Hour Match</span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3" id="slot-grid">
+          <button onclick="selectSlot(this, '05:00 PM - 06:00 PM')" class="slot-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-medium border border-white/10 text-center transition-all">
+            05:00 PM
+          </button>
+          <button onclick="selectSlot(this, '06:00 PM - 07:00 PM')" class="slot-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-medium border border-white/10 text-center transition-all">
+            06:00 PM
+          </button>
+          <button onclick="selectSlot(this, '07:00 PM - 08:00 PM')" class="slot-btn active-slot p-3 rounded-xl font-mono text-xs font-bold text-center transition-all">
+            07:00 PM <span class="block text-[9px] text-emerald-200">Selected</span>
+          </button>
+          <button onclick="selectSlot(this, '08:00 PM - 09:00 PM')" class="slot-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-medium border border-white/10 text-center transition-all">
+            08:00 PM
+          </button>
+          <button onclick="selectSlot(this, '09:00 PM - 10:00 PM')" class="slot-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-medium border border-white/10 text-center transition-all">
+            09:00 PM
+          </button>
+          <button onclick="selectSlot(this, '10:00 PM - 11:00 PM')" class="slot-btn p-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-mono text-xs font-medium border border-white/10 text-center transition-all">
+            10:00 PM
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 3: Booking Summary Drawer -->
+      <div class="p-6 rounded-2xl bg-black/40 border border-white/10 mb-6">
+        <h5 class="text-xs font-mono uppercase tracking-widest text-slate-400 mb-4 font-semibold">BOOKING SUMMARY</h5>
+        
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono mb-4">
+          <div>
+            <span class="text-slate-500 block">ARENA:</span>
+            <span id="summary-turf" class="text-white font-bold">Green Arena Sports Hub</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block">DATE:</span>
+            <span id="summary-date" class="text-white font-bold">Today, Sep 26</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block">SLOT:</span>
+            <span id="summary-slot" class="text-brand-glow font-bold">07:00 PM - 08:00 PM</span>
+          </div>
+          <div>
+            <span class="text-slate-500 block">TOTAL AMOUNT:</span>
+            <span id="summary-total" class="text-white font-bold text-sm">&#8377;1,200</span>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center justify-between pt-4 border-t border-white/10 gap-4">
+          <div class="flex items-center gap-2 text-[11px] text-slate-400">
+            <span class="material-symbols-outlined text-brand-glow text-sm">lock</span>
+            <span>Slot reserved in memory for 10 minutes</span>
+          </div>
+
+          <!-- Confirm Booking Trigger -->
+          <button onclick="triggerBookingConfirmation()" class="btn-glare w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white font-display font-bold text-xs uppercase tracking-wider shadow-[0_4px_25px_rgba(0,135,58,0.5)] hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-lg">check_circle</span>
+            <span>CONFIRM BOOKING</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 9. LOCATION & RADAR SECTION ("PLAY CLOSER")                    -->
+  <!-- ============================================================== -->
+  <section id="location-section" class="relative py-28 px-4 sm:px-8 max-w-7xl mx-auto overflow-hidden">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Info -->
+      <div class="lg:col-span-5 space-y-6 scroll-slide-left">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium">
+          <span class="material-symbols-outlined text-sm">near_me</span>
+          <span>GEOLOCATION RADAR</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-6xl font-black uppercase text-white tracking-tight leading-none">
+          PLAY <br />
+          <span class="text-turf-gradient">CLOSER.</span>
+        </h2>
+        <p class="text-slate-300 text-sm leading-relaxed">
+          Zero traveling hassle. TurfBook automatically detects your coordinates and computes driving distance to the nearest floodlit pitch with turn-by-turn navigation.
+        </p>
+
+        <!-- Location Hotspots -->
+        <div class="space-y-3 pt-2">
+          <div class="p-3.5 rounded-2xl glass-card flex items-center justify-between border-emerald-500/30 bg-emerald-950/20">
+            <div class="flex items-center gap-3">
+              <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+              <div>
+                <span class="font-display font-bold text-sm text-white">Green Arena &bull; Koramangala</span>
+                <span class="block text-[11px] font-mono text-emerald-400">1.2 km away &bull; 4 min drive</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Koramangala" target="_blank" class="px-3 py-1.5 rounded-lg bg-white/10 text-white font-mono text-xs font-bold hover:bg-white/20 transition-colors">GPS</a>
+          </div>
+
+          <div class="p-3.5 rounded-2xl glass-card flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
+              <div>
+                <span class="font-display font-bold text-sm text-white">Kickoff Arena &bull; Indiranagar</span>
+                <span class="block text-[11px] font-mono text-slate-400">2.8 km away &bull; 9 min drive</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=Indiranagar" target="_blank" class="px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 font-mono text-xs hover:bg-white/10 transition-colors">GPS</a>
+          </div>
+
+          <div class="p-3.5 rounded-2xl glass-card flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
+              <div>
+                <span class="font-display font-bold text-sm text-white">Thunder Pitch &bull; HSR Layout</span>
+                <span class="block text-[11px] font-mono text-slate-400">3.4 km away &bull; 12 min drive</span>
+              </div>
+            </div>
+            <a href="https://maps.google.com/?q=HSR+Layout" target="_blank" class="px-3 py-1.5 rounded-lg bg-white/5 text-slate-300 font-mono text-xs hover:bg-white/10 transition-colors">GPS</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Radar Visual Representation -->
+      <div class="lg:col-span-7 relative flex items-center justify-center scroll-slide-right">
+        <div class="relative w-[340px] h-[340px] sm:w-[480px] sm:h-[480px] rounded-full border border-white/10 flex items-center justify-center">
+          
+          <!-- Concentric Radar Rings -->
+          <div class="absolute inset-8 rounded-full border border-emerald-500/15"></div>
+          <div class="absolute inset-20 rounded-full border border-emerald-500/20"></div>
+          <div class="absolute inset-32 rounded-full border border-emerald-500/25"></div>
+          
+          <!-- Rotating Radar Sweep Line -->
+          <div class="absolute inset-0 rounded-full overflow-hidden pointer-events-none">
+            <div class="w-1/2 h-1/2 absolute top-0 right-0 origin-bottom-left bg-gradient-to-br from-emerald-500/25 to-transparent animate-[spin_6s_linear_infinite]"></div>
+          </div>
+
+          <!-- Pulsing User Location Core -->
+          <div class="relative z-10 w-12 h-12 rounded-full bg-brand-emerald flex items-center justify-center text-white shadow-[0_0_30px_rgba(34,197,94,0.8)]">
+            <span class="material-symbols-outlined text-2xl">my_location</span>
+            <div class="radar-pulse-ring absolute inset-0 rounded-full bg-emerald-400"></div>
+          </div>
+
+          <!-- Nearby Turf Pins -->
+          <div class="absolute top-16 right-20 flex items-center gap-2 bg-surface-card/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-emerald-400/40 shadow-xl cursor-pointer hover:scale-105 transition-transform">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="text-xs font-mono text-white font-bold">Green Arena (1.2 km)</span>
+          </div>
+
+          <div class="absolute bottom-24 right-14 flex items-center gap-2 bg-surface-card/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-xl cursor-pointer hover:scale-105 transition-transform">
+            <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+            <span class="text-xs font-mono text-white font-bold">Kickoff (2.8 km)</span>
+          </div>
+
+          <div class="absolute bottom-16 left-16 flex items-center gap-2 bg-surface-card/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-xl cursor-pointer hover:scale-105 transition-transform">
+            <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+            <span class="text-xs font-mono text-white font-bold">Thunder Arena (3.4 km)</span>
+          </div>
+
+          <div class="absolute top-28 left-20 flex items-center gap-2 bg-surface-card/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-xl cursor-pointer hover:scale-105 transition-transform">
+            <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+            <span class="text-xs font-mono text-white font-bold">Champions (5.1 km)</span>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 10. APPLICATION TRANSITIONS: USER & ADMIN DASHBOARDS          -->
+  <!-- ============================================================== -->
+  <section id="dashboard-transitions" class="relative py-28 px-4 sm:px-8 max-w-7xl mx-auto border-t border-white/10">
+    
+    <div class="text-center max-w-2xl mx-auto mb-16 scroll-slide-left">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-3">
+        <span class="material-symbols-outlined text-sm">dashboard</span>
+        <span>SEAMLESS WORKFLOW TRANSITION</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-6xl font-black uppercase text-white tracking-tight">
+        APPLICATION <span class="text-turf-gradient">VIEWS</span>
+      </h2>
+      <p class="text-slate-400 text-sm mt-3">From public discovery website to full-fledged User and Admin management workspaces.</p>
+    </div>
+
+    <!-- Toggle Selector between Player View and Admin View -->
+    <div class="flex justify-center mb-10 scroll-slide-up">
+      <div class="p-1 rounded-2xl bg-surface-card/90 border border-white/10 flex gap-2">
+        <button id="view-user-btn" onclick="switchDashboardView('user')" class="px-6 py-2.5 rounded-xl bg-brand-emerald text-white font-mono text-xs font-bold uppercase tracking-wider shadow-md transition-all">
+          Player Dashboard
+        </button>
+        <button id="view-admin-btn" onclick="switchDashboardView('admin')" class="px-6 py-2.5 rounded-xl text-slate-400 hover:text-white font-mono text-xs font-bold uppercase tracking-wider transition-all">
+          Admin Dashboard (Turf Management)
+        </button>
+      </div>
+    </div>
+
+    <!-- View A: User / Player Dashboard Preview -->
+    <div id="user-dashboard-view" class="glass-card rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl transition-all scroll-slide-right">
+      <div class="flex items-center justify-between pb-6 mb-6 border-b border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-full bg-emerald-500/20 border border-emerald-400 text-emerald-400 flex items-center justify-center font-bold text-lg">
+            A
+          </div>
+          <div>
+            <h4 class="font-display font-bold text-lg text-white">Welcome back, Alex Striker</h4>
+            <span class="text-xs font-mono text-emerald-400">Player ID &bull; TB-USER-8942</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <span class="px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs font-mono text-slate-300">Wallet: &#8377;2,500</span>
+          <a href="#booking-ui-section" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-all">Book New Match</a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Upcoming Match -->
+        <div class="p-5 rounded-2xl bg-white/5 border border-white/10">
+          <span class="text-[11px] font-mono uppercase text-emerald-400 font-bold block mb-1">Upcoming Match</span>
+          <h5 class="font-display font-bold text-white text-base">Green Arena &bull; 7v7 Football</h5>
+          <p class="text-xs text-slate-400 mt-1">Today &bull; 07:00 PM - 08:00 PM</p>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
+            <span class="text-emerald-400 font-mono font-bold">Pass TB-2026-9842X</span>
+            <span class="text-slate-400">Pitch 1 &bull; Floodlit</span>
+          </div>
+        </div>
+
+        <!-- Recent Booking -->
+        <div class="p-5 rounded-2xl bg-white/5 border border-white/10">
+          <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-1">Past Match</span>
+          <h5 class="font-display font-bold text-white text-base">Thunder Box Cricket Arena</h5>
+          <p class="text-xs text-slate-400 mt-1">Sep 20, 2026 &bull; Completed</p>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
+            <span class="text-slate-400 font-mono">Paid &#8377;900</span>
+            <span class="text-emerald-400">★ 5.0 Rated</span>
+          </div>
+        </div>
+
+        <!-- Player Stats -->
+        <div class="p-5 rounded-2xl bg-white/5 border border-white/10">
+          <span class="text-[11px] font-mono uppercase text-slate-400 font-bold block mb-1">Player Profile</span>
+          <div class="flex items-center justify-between mt-2">
+            <div>
+              <span class="text-2xl font-black font-display text-white">24</span>
+              <span class="block text-[10px] font-mono text-slate-400">Matches Played</span>
+            </div>
+            <div>
+              <span class="text-2xl font-black font-display text-emerald-400">100%</span>
+              <span class="block text-[10px] font-mono text-slate-400">Attendance</span>
+            </div>
+            <div>
+              <span class="text-2xl font-black font-display text-white">Top 5%</span>
+              <span class="block text-[10px] font-mono text-slate-400">Fair Play</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View B: Admin Dashboard & Turf Management Preview -->
+    <div id="admin-dashboard-view" class="hidden glass-card rounded-3xl p-6 sm:p-8 border border-white/10 shadow-2xl transition-all">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-white/10 gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded bg-red-950 border border-red-500/40 text-red-400 font-mono text-[10px] font-bold uppercase">Admin Console</span>
+            <h4 class="font-display font-bold text-lg text-white">TURF MANAGEMENT SYSTEM</h4>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">Manage stadiums, adjust slot rates, and view occupancy analytics</p>
+        </div>
+
+        <!-- Add Turf Trigger Modal Button -->
+        <button onclick="openAddTurfModal()" class="btn-glare px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white font-mono text-xs font-bold uppercase tracking-wider shadow-md hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+          <span class="material-symbols-outlined text-base">add_circle</span>
+          <span>ADD NEW TURF</span>
+        </button>
+      </div>
+
+      <!-- Turf Management Table -->
+      <div class="overflow-x-auto">
+        <table class="w-full text-left font-mono text-xs" id="admin-turf-table">
+          <thead class="bg-white/5 text-slate-400 border-b border-white/10">
+            <tr>
+              <th class="py-3 px-4">TURF NAME</th>
+              <th class="py-3 px-4">SPORT TYPE</th>
+              <th class="py-3 px-4">LOCATION</th>
+              <th class="py-3 px-4">PRICE/HR</th>
+              <th class="py-3 px-4">STATUS</th>
+              <th class="py-3 px-4 text-right">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5 text-slate-300" id="admin-turf-rows">
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-white">Green Arena Sports Hub</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400">FOOTBALL_7V7</span></td>
+              <td class="py-3.5 px-4">Koramangala, Bengaluru</td>
+              <td class="py-3.5 px-4 font-bold text-white">&#8377;1,200</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">ACTIVE</span></td>
+              <td class="py-3.5 px-4 text-right text-emerald-400 font-bold hover:underline cursor-pointer">Edit</td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-white">Kickoff Arena Floodlit</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-blue-950 text-blue-400">FOOTBALL_5V5</span></td>
+              <td class="py-3.5 px-4">Indiranagar, Bengaluru</td>
+              <td class="py-3.5 px-4 font-bold text-white">&#8377;1,500</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">ACTIVE</span></td>
+              <td class="py-3.5 px-4 text-right text-emerald-400 font-bold hover:underline cursor-pointer">Edit</td>
+            </tr>
+            <tr>
+              <td class="py-3.5 px-4 font-bold text-white">Thunder Box Cricket Arena</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-amber-950 text-amber-400">BOX_CRICKET</span></td>
+              <td class="py-3.5 px-4">HSR Layout, Bengaluru</td>
+              <td class="py-3.5 px-4 font-bold text-white">&#8377;900</td>
+              <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">ACTIVE</span></td>
+              <td class="py-3.5 px-4 text-right text-emerald-400 font-bold hover:underline cursor-pointer">Edit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- 11. FINAL WEBSITE TRANSITION & FOOTER                          -->
+  <!-- ============================================================== -->
+  <section id="final-section" class="relative py-32 px-4 sm:px-8 text-center bg-gradient-to-t from-[#05080e] via-[#070c14] to-[#070c14]">
+    
+    <div class="max-w-4xl mx-auto space-y-6 scroll-slide-left">
+      <span class="text-xs font-mono uppercase tracking-[0.4em] text-emerald-400 font-semibold block">MATCHDAY IS WAITING</span>
+      
+      <h2 class="font-display text-5xl sm:text-7xl lg:text-8xl font-black uppercase text-white tracking-tight leading-none">
+        READY TO PLAY?
+      </h2>
+      
+      <p class="font-display text-2xl sm:text-4xl font-bold text-turf-gradient">
+        FIND YOUR TURF. BOOK YOUR GAME.
+      </p>
+
+      <!-- Final TurfBook Signature Brand Mark -->
+      <div class="pt-10 flex flex-col items-center scroll-slide-right">
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-brand-pitch to-brand-bright flex items-center justify-center text-white shadow-[0_0_50px_rgba(34,197,94,0.5)] mb-4">
+          <span class="material-symbols-outlined text-4xl">sports_soccer</span>
+        </div>
+        <h3 class="font-display text-3xl sm:text-4xl font-black uppercase tracking-widest text-white">
+          TURF<span class="text-brand-glow">BOOK</span>
+        </h3>
+        <p class="text-xs font-mono text-slate-400 uppercase tracking-widest mt-1">
+          BOOK YOUR GAME. OWN THE TURF.
+        </p>
+
+        <div class="flex items-center gap-4 mt-8">
+          <a href="#hero-section" class="btn-glare px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all">
+            Return To Top
+          </a>
+          <a href="#booking-ui-section" class="px-8 py-3.5 rounded-xl bg-surface-card border border-white/10 text-white font-mono text-xs font-bold uppercase tracking-wider hover:bg-white/10 transition-all">
+            Reserve Turf Slot
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Clean Editorial Footer -->
+    <footer class="max-w-7xl mx-auto mt-28 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-slate-400 gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span class="text-white font-bold">TurfBook Platform</span>
+        <span>&bull; Jakarta EE &bull; MongoDB v7+ &bull; Java Servlets</span>
+      </div>
+      <div>
+        <span>&copy; 2026 TurfBook Arena OS. All rights reserved.</span>
+      </div>
+    </footer>
+  </section>
+
+
+  <!-- ============================================================== -->
+  <!-- MODAL 1: BOOKING CONFIRMATION MODAL                            -->
+  <!-- ============================================================== -->
+  <div id="booking-modal" class="fixed inset-0 z-[120] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full rounded-3xl p-8 border border-emerald-400/40 shadow-[0_0_60px_rgba(0,135,58,0.4)] text-center relative animate-float">
+      
+      <!-- Animated Checkmark Emblem -->
+      <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-brand-pitch to-brand-bright flex items-center justify-center text-white mx-auto mb-6 shadow-xl">
+        <span class="material-symbols-outlined text-3xl">check</span>
+      </div>
+
+      <span class="text-[11px] font-mono uppercase tracking-[0.3em] text-emerald-400 font-bold block mb-1">TRANSACTION COMPLETE</span>
+      <h3 class="font-display text-3xl font-black uppercase text-white mb-2">BOOKING CONFIRMED</h3>
+      <p class="text-xs text-slate-300 mb-6">Your floodlit stadium slot has been locked with instant digital access.</p>
+
+      <!-- Ticket Receipt Card -->
+      <div class="p-5 rounded-2xl bg-black/50 border border-white/10 text-left font-mono text-xs space-y-2 mb-6">
+        <div class="flex justify-between">
+          <span class="text-slate-400">ARENA:</span>
+          <span id="modal-turf-name" class="text-white font-bold">Green Arena Sports Hub</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">DATE:</span>
+          <span id="modal-date" class="text-white font-bold">Today, Sep 26</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-400">TIME:</span>
+          <span id="modal-time" class="text-brand-glow font-bold">07:00 PM - 08:00 PM</span>
+        </div>
+        <div class="flex justify-between pt-2 border-t border-white/10">
+          <span class="text-slate-400">BOOKING ID:</span>
+          <span class="text-emerald-400 font-bold">TB-2026-9842X</span>
+        </div>
+      </div>
+
+      <button onclick="closeBookingModal()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white font-display font-bold text-xs uppercase tracking-wider shadow-lg hover:brightness-110 transition-all">
+        DOWNLOAD DIGITAL PASS &amp; CLOSE
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- MODAL 2: ADMIN ADD TURF MODAL                                 -->
+  <!-- ============================================================== -->
+  <div id="add-turf-modal" class="fixed inset-0 z-[120] bg-black/80 backdrop-blur-md hidden items-center justify-center p-4">
+    <div class="glass-card max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-white/15 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between pb-4 mb-6 border-b border-white/10">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-brand-emerald flex items-center justify-center text-white">
+            <span class="material-symbols-outlined text-lg">add_location_alt</span>
+          </div>
+          <h4 class="font-display font-bold text-lg text-white">ADD NEW ARENA TO TURFBOOK</h4>
+        </div>
+        <button onclick="closeAddTurfModal()" class="text-slate-400 hover:text-white p-1">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+
+      <form onsubmit="submitNewTurf(event)" class="space-y-4 font-mono text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1">TURF NAME *</label>
+            <input id="form-name" required placeholder="e.g. Apex Turf Arena" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">TURF TYPE *</label>
+            <select id="form-type" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400">
+              <option value="FOOTBALL_7V7">Football 7v7</option>
+              <option value="BOX_CRICKET">Box Cricket</option>
+              <option value="BADMINTON">Badminton</option>
+              <option value="MULTI_SPORT">Multi-Sport</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1">DESCRIPTION</label>
+          <textarea id="form-desc" rows="2" placeholder="FIFA 2-star synthetic turf with floodlights..." class="w-full p-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1">PRICE / HR (&#8377;) *</label>
+            <input id="form-price" type="number" required placeholder="1200" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">CAPACITY (PLAYERS)</label>
+            <input id="form-capacity" type="number" placeholder="14" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">CITY *</label>
+            <input id="form-city" required placeholder="Bengaluru" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1">ADDRESS</label>
+            <input id="form-address" placeholder="80 Feet Road, 4th Block" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">POSTAL CODE</label>
+            <input id="form-postal" placeholder="560034" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-slate-300 mb-1">LATITUDE</label>
+            <input id="form-lat" placeholder="12.9352" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+          <div>
+            <label class="block text-slate-300 mb-1">LONGITUDE</label>
+            <input id="form-lng" placeholder="77.6245" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-300 mb-1">AMENITIES</label>
+          <input id="form-amenities" placeholder="Floodlights, Locker Room, Water, Parking" class="w-full h-10 px-3 rounded-xl bg-black/40 border border-white/15 text-white outline-none focus:border-emerald-400" />
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-4 border-t border-white/10">
+          <button type="button" onclick="closeAddTurfModal()" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 transition-colors">Cancel</button>
+          <button type="submit" class="btn-glare px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-emerald to-brand-bright text-white font-bold uppercase tracking-wider shadow-lg hover:scale-105 active:scale-95 transition-all">
+            SAVE &amp; PUBLISH TURF
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <!-- ============================================================== -->
+  <!-- FLOATING CINEMATIC DIRECTOR CONTROLLER BAR                     -->
+  <!-- ============================================================== -->
+  <aside id="director-bar" class="fixed bottom-6 right-6 z-40 flex items-center gap-2 p-2 rounded-2xl glass-card border border-white/15 shadow-2xl backdrop-blur-xl">
+    <!-- Play/Pause Cinematic Journey -->
+    <button id="cinematic-play-btn" onclick="toggleCinematicAutoScroll()" class="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center transition-all shadow-md" title="Toggle Cinematic Auto-Tour">
+      <span id="play-icon" class="material-symbols-outlined text-lg">play_arrow</span>
+    </button>
+    
+    <!-- Section Navigation Quick Jump -->
+    <div class="hidden sm:flex items-center gap-1 font-mono text-[11px]">
+      <button onclick="lenis.scrollTo('#hero-section')" class="px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors">Hero</button>
+      <button onclick="lenis.scrollTo('#sports-section')" class="px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors">Sports</button>
+      <button onclick="lenis.scrollTo('#featured-turfs-section')" class="px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors">Showcase</button>
+      <button onclick="lenis.scrollTo('#typography-section')" class="px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors">Kinetic</button>
+      <button onclick="lenis.scrollTo('#booking-ui-section')" class="px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors">Booking</button>
+      <button onclick="lenis.scrollTo('#location-section')" class="px-2.5 py-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors">Radar</button>
+    </div>
+
+    <!-- Sound Atmosphere Toggle (Web Audio Synthetic Drone) -->
+    <button id="sound-btn" onclick="toggleAtmosphereAudio()" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors" title="Toggle Stadium Sound Synthesis">
+      <span id="sound-icon" class="material-symbols-outlined text-lg">volume_off</span>
+    </button>
+  </aside>
+
+
+  <!-- ============================================================== -->
+  <!-- JAVASCRIPT: GSAP SCROLL STORY & MOTION CONTROLLER               -->
+  <!-- ============================================================== -->
+  <script>
+    // Initialize Lenis Smooth Momentum Scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Register GSAP ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Synchronize Lenis with ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+      lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0);
+
+
+    // ============================================================
+    // 1. OPENING CINEMATIC SEQUENCE TIMELINE
+    // ============================================================
+    window.addEventListener('DOMContentLoaded', () => {
+      const openTl = gsap.timeline({
+        onComplete: () => {
+          document.getElementById('intro-curtain').style.display = 'none';
+          initScrollDrivenAnimations();
+        }
+      });
+
+      // Step 1: Progress bar fill
+      openTl.to('#intro-bar', {
+        width: '100%',
+        duration: 1.2,
+        ease: 'power3.inOut'
+      });
+
+      // Step 2: Reveal logo and subtitle
+      openTl.to('#intro-subtitle', {
+        opacity: 1,
+        duration: 0.6,
+        ease: 'power2.out'
+      }, '-=0.4');
+
+      // Step 3: Logo moves to navigation target + Curtain clips away
+      openTl.to('#intro-center-logo', {
+        scale: 0.85,
+        opacity: 0,
+        y: -40,
+        duration: 0.8,
+        ease: 'power4.inOut'
+      }, '+=0.2');
+
+      openTl.to('#intro-curtain', {
+        clipPath: 'circle(0% at 50% 50%)',
+        duration: 1.1,
+        ease: 'power4.inOut'
+      }, '-=0.6');
+
+      // Step 4: Hero Content Progressive Masked Reveal
+      openTl.fromTo('#hero-video', {
+        scale: 1.25,
+      }, {
+        scale: 1.08,
+        duration: 2.2,
+        ease: 'power3.out'
+      }, '-=0.8');
+
+      openTl.to('#hero-badge', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=1.6');
+
+      openTl.fromTo('.hero-line', {
+        y: '130%',
+        opacity: 0
+      }, {
+        y: '0%',
+        opacity: 1,
+        duration: 1.0,
+        stagger: 0.16,
+        ease: 'power4.out'
+      }, '-=1.4');
+
+      openTl.to('#hero-desc', {
+        opacity: 1,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.6');
+
+      openTl.to('#hero-actions', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.4');
+
+      openTl.to('#hero-stats', {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.4');
+    });
+
+
+    // ============================================================
+    // 2. SCROLL-DRIVEN ANIMATIONS
+    // ============================================================
+    function initScrollDrivenAnimations() {
+
+      // A. Navigation Morph on Scroll
+      ScrollTrigger.create({
+        start: 'top -50',
+        onUpdate: (self) => {
+          const nav = document.getElementById('main-nav');
+          const inner = document.getElementById('nav-inner');
+          if (self.progress > 0) {
+            nav.classList.remove('py-6');
+            nav.classList.add('py-3');
+            inner.classList.add('glass-nav', 'shadow-2xl', 'border-white/10');
+          } else {
+            nav.classList.add('py-6');
+            nav.classList.remove('py-3');
+            inner.classList.remove('glass-nav', 'shadow-2xl', 'border-white/10');
+          }
+        }
+      });
+
+      // B. Hero Background Parallax Slow Zoom
+      gsap.to('#hero-video', {
+        scrollTrigger: {
+          trigger: '#hero-section',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true
+        },
+        scale: 1.0,
+        y: 120
+      });
+
+      // C. Sports Chapter Panels Parallax
+      gsap.utils.toArray('.sport-bg').forEach((bg) => {
+        gsap.to(bg, {
+          scrollTrigger: {
+            trigger: bg.closest('.sport-panel'),
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          },
+          y: -40
+        });
+      });
+
+      // D. Featured Turfs Horizontal Scroll Track
+      const track = document.getElementById('horizontal-track');
+      if (track) {
+        gsap.to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth + 80),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#featured-turfs-section',
+            start: 'center center',
+            end: () => '+=' + (track.scrollWidth - window.innerWidth + 200),
+            pin: true,
+            scrub: 1,
+            invalidateOnRefresh: true
+          }
+        });
+      }
+
+      // E. Kinetic Typography Overlapping Motion
+      gsap.fromTo('#typo-game', {
+        x: '-25%'
+      }, {
+        x: '10%',
+        scrollTrigger: {
+          trigger: '#typography-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      });
+
+      gsap.fromTo('#typo-time', {
+        x: '25%'
+      }, {
+        x: '-10%',
+        scrollTrigger: {
+          trigger: '#typography-section',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      });
+
+      gsap.fromTo('#typo-turf', {
+        y: 80,
+        opacity: 0.4
+      }, {
+        y: 0,
+        opacity: 1,
+        scrollTrigger: {
+          trigger: '#typography-section',
+          start: 'center bottom',
+          end: 'center center',
+          scrub: 1
+        }
+      });
+
+      // F. How It Works Progressive Illuminate
+      const cards = gsap.utils.toArray('.workflow-card');
+      cards.forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+          },
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          delay: i * 0.15,
+          ease: 'power3.out'
+        });
+      });
+    }
+
+
+    // ============================================================
+    // 3. INTERACTIVE BOOKING LOGIC
+    // ============================================================
+    let currentTurf = 'Green Arena Sports Hub';
+    let currentRate = 1200;
+    let currentDate = 'Today, Sep 26';
+    let currentSlot = '07:00 PM - 08:00 PM';
+
+    function selectTurfForBooking(name, price) {
+      currentTurf = name;
+      currentRate = price;
+      document.getElementById('booking-turf-title').textContent = name;
+      document.getElementById('booking-rate-display').textContent = price;
+      document.getElementById('summary-turf').textContent = name;
+      document.getElementById('summary-total').textContent = '₹' + price;
+      lenis.scrollTo('#booking-ui-section');
+    }
+
+    function selectDate(btn, dateText) {
+      document.querySelectorAll('.date-btn').forEach(b => {
+        b.classList.remove('active', 'bg-brand-emerald/90', 'border-emerald-400');
+        b.classList.add('bg-white/5', 'border-white/10');
+      });
+      btn.classList.add('active', 'bg-brand-emerald/90', 'border-emerald-400');
+      btn.classList.remove('bg-white/5', 'border-white/10');
+      currentDate = dateText;
+      document.getElementById('summary-date').textContent = dateText;
+    }
+
+    function selectSlot(btn, slotText) {
+      document.querySelectorAll('.slot-btn').forEach(b => {
+        b.classList.remove('active-slot');
+        b.innerHTML = b.textContent.replace('Selected', '').trim();
+      });
+      btn.classList.add('active-slot');
+      btn.innerHTML = `${slotText.split(' - ')[0]} <span class="block text-[9px] text-emerald-200">Selected</span>`;
+      currentSlot = slotText;
+      document.getElementById('summary-slot').textContent = slotText;
+    }
+
+    function triggerBookingConfirmation() {
+      document.getElementById('modal-turf-name').textContent = currentTurf;
+      document.getElementById('modal-date').textContent = currentDate;
+      document.getElementById('modal-time').textContent = currentSlot;
+      const modal = document.getElementById('booking-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeBookingModal() {
+      const modal = document.getElementById('booking-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+
+    // ============================================================
+    // 4. DASHBOARD VIEW SWITCHER (PLAYER / ADMIN)
+    // ============================================================
+    function switchDashboardView(view) {
+      const userView = document.getElementById('user-dashboard-view');
+      const adminView = document.getElementById('admin-dashboard-view');
+      const userBtn = document.getElementById('view-user-btn');
+      const adminBtn = document.getElementById('view-admin-btn');
+
+      if (view === 'user') {
+        userView.classList.remove('hidden');
+        adminView.classList.add('hidden');
+        userBtn.classList.add('bg-brand-emerald', 'text-white');
+        userBtn.classList.remove('text-slate-400');
+        adminBtn.classList.remove('bg-brand-emerald', 'text-white');
+        adminBtn.classList.add('text-slate-400');
+      } else {
+        userView.classList.add('hidden');
+        adminView.classList.remove('hidden');
+        adminBtn.classList.add('bg-brand-emerald', 'text-white');
+        adminBtn.classList.remove('text-slate-400');
+        userBtn.classList.remove('bg-brand-emerald', 'text-white');
+        userBtn.classList.add('text-slate-400');
+      }
+    }
+
+    function openAddTurfModal() {
+      const modal = document.getElementById('add-turf-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeAddTurfModal() {
+      const modal = document.getElementById('add-turf-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function submitNewTurf(e) {
+      e.preventDefault();
+      const name = document.getElementById('form-name').value;
+      const type = document.getElementById('form-type').value;
+      const city = document.getElementById('form-city').value;
+      const price = document.getElementById('form-price').value;
+
+      // Append row to admin table
+      const tbody = document.getElementById('admin-turf-rows');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="py-3.5 px-4 font-bold text-white">${name}</td>
+        <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-950 text-emerald-400">${type}</span></td>
+        <td class="py-3.5 px-4">${city}</td>
+        <td class="py-3.5 px-4 font-bold text-white">&#8377;${price}</td>
+        <td class="py-3.5 px-4"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">ACTIVE</span></td>
+        <td class="py-3.5 px-4 text-right text-emerald-400 font-bold hover:underline cursor-pointer">Edit</td>
+      `;
+      tbody.prepend(tr);
+
+      closeAddTurfModal();
+      alert(`TURF ADDED SUCCESSFULLY!\n${name} has been published to TurfBook.`);
+    }
+
+
+    // ============================================================
+    // 5. CINEMATIC DIRECTOR AUTO-TOUR & WEB AUDIO ATMOSPHERE
+    // ============================================================
+    let isAutoScrolling = false;
+    let autoScrollInterval = null;
+
+    function toggleCinematicAutoScroll() {
+      const playIcon = document.getElementById('play-icon');
+      isAutoScrolling = !isAutoScrolling;
+
+      if (isAutoScrolling) {
+        playIcon.textContent = 'pause';
+        autoScrollInterval = setInterval(() => {
+          window.scrollBy({ top: 3, behavior: 'auto' });
+          if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+            toggleCinematicAutoScroll();
+          }
+        }, 16);
+      } else {
+        playIcon.textContent = 'play_arrow';
+        clearInterval(autoScrollInterval);
+      }
+    }
+
+    // Web Audio Atmosphere Generator (Soft Stadium Ambient Chords)
+    let audioCtx = null;
+    let isAudioPlaying = false;
+    let osc1, osc2, gainNode;
+
+    function toggleAtmosphereAudio() {
+      const soundIcon = document.getElementById('sound-icon');
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (!isAudioPlaying) {
+        // Create dual drone oscillators
+        osc1 = audioCtx.createOscillator();
+        osc2 = audioCtx.createOscillator();
+        gainNode = audioCtx.createGain();
+
+        osc1.type = 'sine';
+        osc1.frequency.setValueAtTime(110, audioCtx.currentTime); // A2 pitch
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(164.81, audioCtx.currentTime); // E3 fifth
+
+        gainNode.gain.setValueAtTime(0.04, audioCtx.currentTime); // gentle ambient
+
+        osc1.connect(gainNode);
+        osc2.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        osc1.start();
+        osc2.start();
+        isAudioPlaying = true;
+        soundIcon.textContent = 'volume_up';
+        soundIcon.classList.add('text-emerald-400');
+      } else {
+        if (osc1) osc1.stop();
+        if (osc2) osc2.stop();
+        isAudioPlaying = false;
+        soundIcon.textContent = 'volume_off';
+        soundIcon.classList.remove('text-emerald-400');
+      }
+    }
+  </script>
+
+  <!-- Scroll-Reveal Slide Animation Observer -->
+  <script>
+    (function initScrollSlide() {
+      const els = document.querySelectorAll('.scroll-slide-left, .scroll-slide-right, .scroll-slide-up');
+      if (!els.length) return;
+      if (!('IntersectionObserver' in window)) {
+        els.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+          } else {
+            const r = e.target.getBoundingClientRect();
+            if (r.top > window.innerHeight) e.target.classList.remove('is-visible');
+          }
+        });
+      }, { rootMargin: '0px 0px -40px 0px', threshold: 0.08 });
+      els.forEach(el => obs.observe(el));
+    })();
+  </script>
+</body>
+</html>
